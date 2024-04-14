@@ -3,6 +3,8 @@ import sklearn
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression as LinearRegressionSklearn
+from sklearn.linear_model import Ridge
+import matplotlib.pyplot as plt
 
 
 def LinearRegressionModel(X_base, y, degrees):
@@ -20,7 +22,7 @@ def LinearRegressionModel(X_base, y, degrees):
         sds = StandardScaler()
         x_train = sds.fit_transform(x_train)
         x_test = sds.fit_transform(x_test)
-        lr_model = LinearRegressionSklearn()
+        lr_model = Ridge(alpha=10, fit_intercept=True)
         lr_model.fit(x_train,y_train)
         print(lr_model.score(x_train,y_train))
         y_predict_train = lr_model.predict(x_train)
@@ -28,14 +30,13 @@ def LinearRegressionModel(X_base, y, degrees):
         loss_train = sklearn.metrics.mean_squared_error(y_predict_train, y_train)
         loss_test = sklearn.metrics.mean_squared_error(y_predict_test, y_test)
         loss_train_list.append(loss_train)
-        
+        print('diff sum %d' % abs(y_predict_train - y_train).sum())
         diffList = abs(y_predict_test - y_test)
         falseCount = 0
         for i in diffList:
             if i > 2000:
                 falseCount += 1.0
         print('false rate is %f' % (falseCount / len(diffList)))
-
         loss_test_list.append(loss_test)
         print('degree %d, train loss %d, test loss %d' % (d, loss_train, loss_test))
 
