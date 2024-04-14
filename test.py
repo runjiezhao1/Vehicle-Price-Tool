@@ -1,6 +1,7 @@
 import DataClean.DataProcess as dp
 import Model.LinearModel as LM
 import Model.RandomForestModel as RF
+import Model.DecisionTreeModel as DT
 import numpy as np
 
 
@@ -14,4 +15,5 @@ degrees = np.arange(1, 20)
 # mse = abs(df['mmr'] - df['sellingprice']).sum() / df.shape[0]
 # print(mse)
 #LM.LinearRegressionModel(X_base,y,degrees)
-RF.RandomForestModel(X_base, y)
+#RF.RandomForestModel(X_base, y)
+DT.DecisionTreeModel(X_base, y)
